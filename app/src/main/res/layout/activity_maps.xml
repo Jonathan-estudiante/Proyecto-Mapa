@@ -15,7 +15,13 @@
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         tools:context=".MapsActivity">
-
+        <Button
+            android:id="@+id/ubicarfavorito"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/lugar"
+            android:layout_gravity="left|top"/>
     </fragment>
 
     <LinearLayout

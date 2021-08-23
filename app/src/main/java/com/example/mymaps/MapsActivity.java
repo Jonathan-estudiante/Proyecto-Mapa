@@ -34,10 +34,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ActivityMapsBinding binding;
     double latitud, longitud;
     SharedPreferences preferences;
-    private Button btnLimpiarMarcas, btnGuardarMarca;
+    private Button btnLimpiarMarcas, btnGuardarMarca, btnMarcaFavorita;
     Marker currentMarker = null;
     LatLng miUbicacion;
     double valorLat, valorLon;
+    LatLng lonlat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         btnLimpiarMarcas = findViewById(R.id.limpiar);
         btnGuardarMarca = findViewById(R.id.favorito);
+        btnMarcaFavorita = findViewById(R.id.ubicarfavorito);
+
 
         btnLimpiarMarcas.setOnClickListener(this);
         btnGuardarMarca.setOnClickListener(this);
+        btnMarcaFavorita.setOnClickListener(this);
 
     }
 
@@ -85,7 +89,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.clear();
         }
         if (v == btnGuardarMarca){
-            leerPreferences();
+            guardarPreferences(lonlat);
+        }
+        if (v == btnMarcaFavorita){
             Toast.makeText(MapsActivity.this, "Posición Favorita: " + " Latitud: "+ valorLat +" Longitud " + valorLon , Toast.LENGTH_SHORT).show();
             miUbicacion = new LatLng(valorLat, valorLon);
             mMap.addMarker(new MarkerOptions()
@@ -100,7 +106,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapLongClick(LatLng latLng) {
         Toast.makeText(MapsActivity.this, "Click position" + latLng.latitude+latLng.longitude, Toast.LENGTH_SHORT).show();
         currentMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Mi ubicacion"));
-        guardarPreferences(latLng);
+        lonlat = latLng;
     }
 
     public void guardarPreferences(LatLng latLng){
